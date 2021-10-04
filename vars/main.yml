@@ -1,0 +1,3 @@
+---
+gas_docker_fout_settings_defaults: &gas_docker_fout_settings_defaults
+  STACK_NAME: ""
