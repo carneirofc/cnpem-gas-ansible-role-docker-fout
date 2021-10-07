@@ -19,20 +19,17 @@ networks:
       name: "host"
 
 services:
-version: '3.4'
-
-services:
   {{ item.SINAP_TIMING_CONTAINER_NAME }}:
     <<: *defaults
     image: {{ item.SINAP_TIMING_IMAGE_BASE }}:{{ item.SINAP_TIMING_IMAGE_TAG }}
     container_name: {{ item.SINAP_TIMING_CONTAINER_NAME }}-{{ item.SINAP_TIMING_INSTANCE }}
     command: [
-        '-t', '${SINAP_TIMING_TELNET_PORT}',
-        '-i', '${SINAP_TIMING_IP}',
-        '-p', '${SINAP_TIMING_PORT}',
-        '-d', '${SINAP_TIMING_INSTANCE}',
-        '-P', '${SINAP_TIMING_AREA_PREFIX}',
-        '-R', '${SINAP_TIMING_DEVICE_PREFIX}',
+        '-t', '{{ item.SINAP_TIMING_TELNET_PORT }}',
+        '-i', '{{ item.SINAP_TIMING_IP }}',
+        '-p', '{{ item.SINAP_TIMING_PORT }}',
+        '-d', '{{ item.SINAP_TIMING_INSTANCE }}',
+        '-P', '{{ item.SINAP_TIMING_AREA_PREFIX }}',
+        '-R', '{{ item.SINAP_TIMING_DEVICE_PREFIX }}',
     ]
     volumes:
       - type: bind
@@ -44,9 +41,9 @@ services:
 {% if item.SINAP_TIMING_PLACEMENT is defined %}
       placement:
 {%   if item.SINAP_TIMING_PLACEMENT.CONSTRAINTS is defined and item.SINAP_TIMING_PLACEMENT.CONSTRAINTS | length %}
-      constraints:
+        constraints:
 {%     for item in item.SINAP_TIMING_PLACEMENT.CONSTRAINTS %}
-      - {{ item }}
+          - {{ item }}
 {%     endfor %}
 {%   endif %}
 {% endif %}
